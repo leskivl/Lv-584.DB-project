@@ -1,9 +1,9 @@
---DROP DATABASE [BeRead];
+--DROP DATABASE BeRead;
 --GO
---CREATE DATABASE [BeRead];
+--CREATE DATABASE BeRead;
 --GO
 
-USE [BeRead];
+USE BeRead;
 GO
 
 CREATE SCHEMA Address;
@@ -207,6 +207,7 @@ GO
 CREATE TABLE [Purchase].[Vendors] (
   [VendorID] INT PRIMARY KEY IDENTITY (1, 1),
   [VendorCode] BIGINT NOT NULL,
+  [Name] NVARCHAR(50) NOT NULL,
   [Iban] NVARCHAR(29) NOT NULL,
   [CountryID] TINYINT NOT NULL,
   [ZipCode] INT NOT NULL,
@@ -425,7 +426,6 @@ CREATE TABLE [Item].[LingusticDescriptions](
 GO
 ----------------------------------------------
 
-GO
 ALTER TABLE [Unit].[BusinessUnits]  WITH CHECK ADD  CONSTRAINT [FK_BusinessUnits_BusinessUnitTypes] FOREIGN KEY([BusinessUnitTypeID])
 REFERENCES [Unit].[BusinessUnitTypes] ([BusinessUnitTypeID])
 GO
