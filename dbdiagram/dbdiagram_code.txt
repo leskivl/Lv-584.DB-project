@@ -1,0 +1,437 @@
+Table "CurrencyRates" {
+  "CurrencyID" INT [pk, increment]
+  "Code" NVARCHAR(5) [unique, not null]
+  "Rate" DECIMAL(10,2) [not null]
+  "ModifiedDate" DATETIME [not null]
+}
+
+Table "PaymentTypes" {
+  "PaymentTypeID" TINYINT [pk, increment]
+  "Name" NVARCHAR(20) [not null]
+}
+
+Table "Orders" {
+  "OrderID" INT [pk, increment]
+  "EmployeeID" INT [not null]
+  "CustomerID" INT
+  "Date" DATETIME [not null]
+  "PaymentTypeID" TINYINT [not null]
+  "RRN" INT
+  "Amount" DECIMAL [not null]
+  "DiscountID" TINYINT
+  "DiscountAmount" DECIMAL
+  "DeliveryDepartmentID" INT
+  "BusinessUnitID" INT
+  "Comment" NVARCHAR(100)
+}
+
+Table "OrderDetails" {
+  "OrderDetailID" INT [pk, increment]
+  "OrderID" INT [not null]
+  "ItemID" INT [not null]
+  "ItemPrice" DECIMAL(10,2) [not null]
+  "Quantity" SMALLINT [not null]
+  "IsReturn" BIT [not null]
+}
+
+Table "DeliveryTypes" {
+  "DeliveryTypeID" TINYINT [pk, increment]
+  "Name" NVARCHAR(50)
+}
+
+Table "DeliveryDepartments" {
+  "DeliveryDepartmentID" INT [pk, increment]
+  "DeliveryTypeID" TINYINT [not null]
+  "DeliveryCompanyID" TINYINT
+  "CountryID" TINYINT
+  "CityID" SMALLINT
+  "DepartmentNumber" INT
+  "DepartmentAddress" NVARCHAR(500)
+}
+
+Table "DeliveryCompanies" {
+  "DeliveryCompanyID" TINYINT [pk, increment]
+  "Name" NVARCHAR(50) [not null]
+}
+
+Table "BusinessUnits" {
+  "BusinessUnitID" INT [pk, increment]
+  "Name" NVARCHAR(100)
+  "BusinessUnitTypeID" TINYINT [not null]
+  "ZipCode" INT [not null]
+  "CityID" SMALLINT [not null]
+  "Street" NVARCHAR(255) [not null]
+  "BuildingNumber" NVARCHAR(5) [not null]
+  "AppartmentNumber" NVARCHAR(7)
+  "Phone" NVARCHAR [not null]
+  "IsActive" BIT [not null]
+}
+
+Table "Countries" {
+  "CountryID" TINYINT [pk, increment]
+  "Name" NVARCHAR(50) [not null]
+}
+
+Table "Cities" {
+  "CityID" SMALLINT [pk, increment]
+  "Name" NVARCHAR(50) [not null]
+}
+
+Table "BusinessUnitTypes" {
+  "BusinessUnitTypeID" TINYINT [pk, increment]
+  "Name" NVARCHAR [not null]
+}
+
+Table "Stocks" {
+  "StockID" INT [pk, increment]
+  "ItemID" INT [not null]
+  "BusinessUnitID" INT [not null]
+  "Quantity" INT [not null]
+}
+
+Table "Departments" {
+  "DepartmentID" TINYINT [pk, increment]
+  "Name" INT [unique, not null]
+}
+
+Table "Employees" {
+  "EmployeeID" INT [pk, increment]
+  "FirstName" NVARCHAR(50) [not null]
+  "LastName" NVARCHAR(50) [not null]
+  "HireDate" DATE [not null]
+  "TerminationDate" DATE
+  "BusinessUnitID" INT [not null]
+  "DepartmentID" TINYINT [not null]
+  "ManagerID" INT
+  "RoleID" TINYINT [not null]
+  "DateOfBirth" DATE [not null]
+  "Gender" NVARCHAR(3)
+  "IsActive" BIT [not null]
+}
+
+Table "EmployeeDetails" {
+  "EmployeeDetailID" INT [pk, increment]
+  "EmployeeID" INT [not null]
+  "PassportInfo" NVARCHAR(9) [unique, not null]
+  "ZipCode" INT [not null]
+  "CityID" SMALLINT [not null]
+  "Street" NVARCHAR(255) [not null]
+  "BuildingNumber" NVARCHAR(5) [not null]
+  "AppartmentNumber" NVARCHAR(7)
+  "PrimaryPhone" NVARCHAR(12) [not null]
+  "SecondaryPhone" NVARCHAR(12)
+  "WorkPhone" NVARCHAR(12)
+  "Email" NVARCHAR(50)
+}
+
+Table "Roles" {
+  "RoleID" TINYINT [pk, increment]
+  "Name" NVARCHAR(50) [not null]
+  "BusinessUnitTypeID" TINYINT [not null]
+  "Description" NVARCHAR(255) [not null]
+}
+
+Table "EmployeeRoleHistories" {
+  "EmployeeRoleHistoryID" INT [pk, increment]
+  "EmployeeID" INT [not null]
+  "RoleID" TINYINT [not null]
+  "StartDate" DATE [not null]
+  "EndDate" DATE
+  "Salary" DECIMAL(8,2) [not null]
+  "IsActive" BIT [not null]
+  "SalaryModifiedDate" DATE
+}
+
+Table "Vendors" {
+  "VendorID" INT [pk, increment]
+  "VendorCode" BIGINT [not null]
+  "Iban" NVARCHAR(29) [not null]
+  "CountryID" TINYINT [not null]
+  "ZipCode" INT [not null]
+  "CityID" SMALLINT [not null]
+  "Street" NVARCHAR(255) [not null]
+  "BuildingNumber" NVARCHAR(5) [not null]
+  "AppartmentNumber" NVARCHAR(7)
+  "PrimaryPhone" NVARCHAR(12) [not null]
+  "WorkPhone" NVARCHAR(12)
+  "IsActive" BIT
+}
+
+Table "Accounts" {
+  "AccountID" INT [pk, increment]
+  "CustomerID" INT [unique, not null]
+  "UserLogin" NVARCHAR(20) [unique, not null]
+  "UserPassword" NVARCHAR(10) [not null]
+  "ModifiedDate" DATETIME [not null]
+}
+
+Table "Customers" {
+  "CustomerID" INT [pk, increment]
+  "FirstName" NVARCHAR(50) [not null]
+  "MiddleName" NVARCHAR(50)
+  "LastName" NVARCHAR(50) [not null]
+  "AccountID" INT
+  "ZipCode" INT [not null]
+  "CountryID" TINYINT
+  "CityID" SMALLINT [not null]
+  "Street" NVARCHAR(255) [not null]
+  "BuildingNumber" NVARCHAR(5) [not null]
+  "AppartmentNumber" NVARCHAR(7)
+  "PrimaryPhone" NVARCHAR(12) [not null]
+  "WorkPhone" NVARCHAR(12)
+  "DiscountID" TINYINT [not null]
+  "AmountSpend" DECIMAL(10,2)
+}
+
+Table "Discounts" {
+  "DiscountID" TINYINT [pk, increment]
+  "Percentage" DECIMAL(4,2) [not null]
+  "AmountSpend" DECIMAL(10,2) [not null]
+}
+
+Table "Consignments" {
+  "ConsignmentID" INT [pk, increment]
+  "Number" INT [not null]
+  "Date" DATE [not null]
+  "VendorID" INT [not null]
+  "BusinessUnitID" INT [not null]
+  "EmployeeID" INT [not null]
+}
+
+Table "ConsignmentDetails" {
+  "ConsignmentDetailID" INT [pk, increment]
+  "ItemID" INT [not null]
+  "ConsignmentID" INT [not null]
+  "Quantity" INT [not null]
+  "PurchasePrice" DECIMAL(10,2) [not null]
+  "CurrencyID" INT [not null]
+}
+
+Table "ShipmentDetails" {
+  "ShipmentDetailID" INT [pk, increment]
+  "ItemID" INT [not null]
+  "ShipmentID" INT [not null]
+  "Quantity" INT [not null]
+}
+
+Table "Shipments" {
+  "ShipmentID" INT [pk, increment]
+  "Number" INT [not null]
+  "Date" DATE [not null]
+  "BusinessUnitIDFrom" INT [not null]
+  "BusinessUnitIDTo" INT [not null]
+  "EmployeeIDFrom" INT [not null]
+  "EmployeeIDTo" INT [not null]
+}
+
+Table "Items" {
+  "ItemID" INT [pk, increment]
+  "SubcategoryID" TINYINT [not null]
+  "PriceHistoryID" INT [not null]
+  "Title" NVARCHAR(500) [not null]
+  "Description" NVARCHAR(MAX)
+  "PulisherID" SMALLINT
+  "AuthorID" INT
+  "LanguageID" TINYINT [not null]
+  "CoverTypeID" TINYINT
+  "GenreID" TINYINT
+  "Year" DATE [not null]
+  "AgeRestrictionID" NVARCHAR(10)
+  "ISBN" BIGINT [not null]
+  "Pages" INT
+  "Issue" NVARCHAR(10)
+  "CreateDate" DATE [not null]
+  "ModifiedDate" DATE [not null]
+}
+
+Table "PriceHistories" {
+  "PriceHistoryID" INT [pk, not null, increment]
+  "ConsignmentID" INT [not null]
+  "ItemID" INT [not null]
+  "Price" DECIMAL(10,2) [not null]
+  "SetDate" DATE [not null]
+  "ModifiedDate" DATE
+  "IsActive" BIT [not null]
+}
+
+Table "Categories" {
+  "CategoryID" TINYINT [pk, increment]
+  "Name" NVARCHAR(100) [not null]
+  "Description" NVARCHAR(500)
+}
+
+Table "Subcategories" {
+  "SubcategoryID" TINYINT [pk, increment]
+  "CategoryID" TINYINT [not null]
+  "Name" NVARCHAR(100) [not null]
+  "Description" NVARCHAR(500)
+}
+
+Table "Publishers" {
+  "PublisherID" SMALLINT [pk, increment]
+  "Name" NVARCHAR(500) [not null]
+  "CountryID" TINYINT
+  "CityID" SMALLINT
+}
+
+Table "Authors" {
+  "AuthorID" INT [pk, increment]
+  "FirstName" NVARCHAR(50) [not null]
+  "MiddleName" NVARCHAR(50)
+  "LastName" NVARCHAR(50) [not null]
+}
+
+Table "Genres" {
+  "GenreID" TINYINT [pk, increment]
+  "Name" NVARCHAR(50)
+}
+
+Table "CoverTypes" {
+  "CoverTypeID" TINYINT [pk, increment]
+  "Name" NVARCHAR(50) [not null]
+}
+
+Table "Languages" {
+  "LanguageID" TINYINT [pk, increment]
+  "Name" NVARCHAR(50) [not null]
+}
+
+Table "PublishingHouses" {
+  "PublishingHouseID" INT [pk, increment]
+  "ItemID" INT [not null]
+  "PublisherID" SMALLINT [not null]
+}
+
+Table "Authorships" {
+  "AuthorshipID" INT [pk, increment]
+  "AuthorID" INT [not null]
+  "ItemID" INT [not null]
+}
+
+Table "ScenicalDescriptions" {
+  "ScenicalDescriptionID" INT [pk, increment]
+  "GenreID" TINYINT [not null]
+  "ItemID" INT [not null]
+}
+
+Table "LingusticDescriptions" {
+  "LingusticDescriptionID" INT [pk, increment]
+  "ItemID" INT [not null]
+  "LanguageID" TINYINT [not null]
+}
+
+Ref "FK_BusinessUnits_BusinessUnitTypes":"BusinessUnitTypes"."BusinessUnitTypeID" < "BusinessUnits"."BusinessUnitTypeID"
+
+Ref "FK_BusinessUnits_Cities":"Cities"."CityID" < "BusinessUnits"."CityID"
+
+Ref "FK_EmployeeRoleHistories_Employees":"Employees"."EmployeeID" < "EmployeeRoleHistories"."EmployeeID"
+
+Ref "FK_EmployeeRoleHistories_Roles":"Roles"."RoleID" < "EmployeeRoleHistories"."RoleID"
+
+Ref "FK_EmployeeDetails_Employees":"Employees"."EmployeeID" < "EmployeeDetails"."EmployeeID"
+
+Ref "FK_Employees_Employees1":"Employees"."EmployeeID" < "Employees"."ManagerID"
+
+Ref "FK_Employees_Roles":"Roles"."RoleID" < "Employees"."RoleID"
+
+Ref "FK_Employees_BusinessUnits":"BusinessUnits"."BusinessUnitID" < "Employees"."BusinessUnitID"
+
+Ref "FK_Employees_Departments":"Departments"."DepartmentID" < "Employees"."DepartmentID"
+
+Ref "FK_EmployeeDetails_Cities":"Cities"."CityID" < "EmployeeDetails"."CityID"
+
+Ref "FK_Roles_BusinessUnitTypes":"BusinessUnitTypes"."BusinessUnitTypeID" < "Roles"."BusinessUnitTypeID"
+
+Ref "FK_Stocks_BusinessUnits":"BusinessUnits"."BusinessUnitID" < "Stocks"."BusinessUnitID"
+
+Ref "FK_Vendors_Cities":"Cities"."CityID" < "Vendors"."CityID"
+
+Ref "FK_Customers_Cities":"Cities"."CityID" < "Customers"."CityID"
+
+Ref "FK_Customers_Discounts":"Discounts"."DiscountID" < "Customers"."DiscountID"
+
+Ref "FK_Customers_Countries":"Countries"."CountryID" < "Customers"."CountryID"
+
+Ref "FK_Orders_BusinessUnits":"BusinessUnits"."BusinessUnitID" < "Orders"."BusinessUnitID"
+
+Ref "FK_Orders_Customers":"Customers"."CustomerID" < "Orders"."CustomerID"
+
+Ref "FK_Orders_DeliveryDepartments":"DeliveryDepartments"."DeliveryDepartmentID" < "Orders"."DeliveryDepartmentID"
+
+Ref "FK_Orders_Discounts":"Discounts"."DiscountID" < "Orders"."DiscountID"
+
+Ref "FK_Orders_Employees":"Employees"."EmployeeID" < "Orders"."EmployeeID"
+
+Ref "FK_Orders_PaymentTypes":"PaymentTypes"."PaymentTypeID" < "Orders"."PaymentTypeID"
+
+Ref "FK_OrderDetails_Orders":"Orders"."OrderID" < "OrderDetails"."OrderID"
+
+Ref "FK_Customers_Accounts":"Accounts"."AccountID" < "Customers"."AccountID"
+
+Ref "FK_ConsignmentDetails_Consignments":"Consignments"."ConsignmentID" < "ConsignmentDetails"."ConsignmentID"
+
+Ref "FK_ConsignmentDetails_CurrencyRates":"CurrencyRates"."CurrencyID" < "ConsignmentDetails"."CurrencyID"
+
+Ref "FK_Consignments_BusinessUnits":"BusinessUnits"."BusinessUnitID" < "Consignments"."BusinessUnitID"
+
+Ref "FK_Consignments_Employees":"Employees"."EmployeeID" < "Consignments"."EmployeeID"
+
+Ref "FK_Consignments_Vendors":"Vendors"."VendorID" < "Consignments"."VendorID"
+
+Ref "FK_PriceHistories_Consignments":"Consignments"."ConsignmentID" < "PriceHistories"."ConsignmentID"
+
+Ref "FK_ConsignmentDetails_Items":"Items"."ItemID" < "ConsignmentDetails"."ItemID"
+
+Ref "FK_Items_CoverTypes":"CoverTypes"."CoverTypeID" < "Items"."CoverTypeID"
+
+Ref "FK_Items_PriceHistories":"PriceHistories"."PriceHistoryID" < "Items"."PriceHistoryID"
+
+Ref "FK_Items_Subcategories":"Subcategories"."SubcategoryID" < "Items"."SubcategoryID"
+
+Ref "FK_Subcategories_Categories":"Categories"."CategoryID" < "Subcategories"."CategoryID"
+
+Ref "FK_LingusticDescriptions_Items":"Items"."ItemID" < "LingusticDescriptions"."ItemID"
+
+Ref "FK_LingusticDescriptions_Languages":"Languages"."LanguageID" < "LingusticDescriptions"."LanguageID"
+
+Ref "FK_ScenicalDescriptions_Genres":"Genres"."GenreID" < "ScenicalDescriptions"."GenreID"
+
+Ref "FK_ScenicalDescriptions_Items":"Items"."ItemID" < "ScenicalDescriptions"."ItemID"
+
+Ref "FK_Authorships_Authors":"Authors"."AuthorID" < "Authorships"."AuthorID"
+
+Ref "FK_Authorships_Items":"Items"."ItemID" < "Authorships"."ItemID"
+
+Ref "FK_PublishingHouses_Items":"Items"."ItemID" < "PublishingHouses"."ItemID"
+
+Ref "FK_PublishingHouses_Publishers":"Publishers"."PublisherID" < "PublishingHouses"."PublisherID"
+
+Ref "FK_Publishers_Cities":"Cities"."CityID" < "Publishers"."CityID"
+
+Ref "FK_Publishers_Countries":"Countries"."CountryID" < "Publishers"."CountryID"
+
+Ref "FK_ShipmentDetails_Items":"Items"."ItemID" < "ShipmentDetails"."ItemID"
+
+Ref "FK_ShipmentDetails_Shipments":"Shipments"."ShipmentID" < "ShipmentDetails"."ShipmentID"
+
+Ref "FK_DeliveryDepartments_Countries":"Countries"."CountryID" < "DeliveryDepartments"."CountryID"
+
+Ref "FK_DeliveryDepartments_DeliveryCompanies":"DeliveryCompanies"."DeliveryCompanyID" < "DeliveryDepartments"."DeliveryCompanyID"
+
+Ref "FK_DeliveryDepartments_DeliveryTypes":"DeliveryTypes"."DeliveryTypeID" < "DeliveryDepartments"."DeliveryTypeID"
+
+Ref "FK_DeliveryDepartments_Cities":"Cities"."CityID" < "DeliveryDepartments"."CityID"
+
+Ref "FK_OrderDetails_Items":"Items"."ItemID" < "OrderDetails"."ItemID"
+
+Ref "FK_Vendors_Countries":"Countries"."CountryID" < "Vendors"."CountryID"
+
+Ref "FK_Shipments_BusinessUnits":"BusinessUnits"."BusinessUnitID" < "Shipments"."BusinessUnitIDFrom"
+
+Ref "FK_Shipments_BusinessUnits1":"BusinessUnits"."BusinessUnitID" < "Shipments"."BusinessUnitIDTo"
+
+Ref "FK_Shipments_Employees":"Employees"."EmployeeID" < "Shipments"."EmployeeIDFrom"
+
+Ref "FK_Shipments_Employees1":"Employees"."EmployeeID" < "Shipments"."EmployeeIDTo"
+
+Ref "FK_Stocks_Items":"Items"."ItemID" < "Stocks"."ItemID"
