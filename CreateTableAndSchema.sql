@@ -601,3 +601,6 @@ GO
 ALTER TABLE [Purchase].[Stocks]  WITH CHECK ADD  CONSTRAINT [FK_Stocks_Items] FOREIGN KEY([ItemID])
 REFERENCES [Item].[Items] ([ItemID])
 GO
+
+--ALTER TABLE Purchase.Vendors
+--ALTER COLUMN IBAN nvarchar(34)
