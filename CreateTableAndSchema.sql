@@ -310,9 +310,6 @@ CREATE TABLE [Item].[Items](
 	[PriceHistoryID] INT NOT NULL,
 	[Title] NVARCHAR (500) NOT NULL,
 	[Description] NVARCHAR(MAX),
-	[PulisherID] SMALLINT,
-	[AuthorID] INT,
-	[LanguageID] TINYINT NOT NULL,
 	[CoverTypeID] TINYINT,
 	[GenreID] TINYINT,
 	[Year] DATE NOT NULL,
@@ -395,25 +392,26 @@ GO
 DROP TABLE IF EXISTS [Item].[PublishingHouses];
 GO
 CREATE TABLE [Item].[PublishingHouses](
-	[PublishingHouseID] INT PRIMARY KEY IDENTITY(1,1),
 	[ItemID] INT NOT NULL,
-	[PublisherID] SMALLINT NOT NULL
+	[PublisherID] SMALLINT NOT NULL,
+	CONSTRAINT PK_PublishingHouses PRIMARY KEY ([ItemID],[PublisherID])
 )
 GO
 DROP TABLE IF EXISTS [Item].[Authorships];
 GO
 CREATE TABLE [Item].[Authorships](
-	[AuthorshipID] INT PRIMARY KEY IDENTITY(1,1),
+	[ItemID] INT NOT NULL,
 	[AuthorID] INT NOT NULL,
-	[ItemID] INT NOT NULL
+	CONSTRAINT PK_Authorships PRIMARY KEY ([ItemID],[AuthorID])
 )
 GO
 DROP TABLE IF EXISTS [Item].[ScenicalDescriptions];
 GO
 CREATE TABLE [Item].[ScenicalDescriptions](
-	[ScenicalDescriptionID] INT PRIMARY KEY IDENTITY(1,1),
+	[ItemID] INT NOT NULL,
 	[GenreID] TINYINT NOT NULL,
-	[ItemID] INT NOT NULL
+	CONSTRAINT PK_ScenicalDescriptions PRIMARY KEY ([ItemID],[GenreID])
+
 )
 GO
 DROP TABLE IF EXISTS [Item].[LingusticDescriptions];
