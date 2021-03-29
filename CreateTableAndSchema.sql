@@ -310,7 +310,6 @@ CREATE TABLE [Item].[Items](
 	[Title] NVARCHAR (500) NOT NULL,
 	[Description] NVARCHAR(MAX),
 	[CoverTypeID] TINYINT,
-	[GenreID] TINYINT,
 	[Year] NVARCHAR(5),
 	[AgeRestrictionID] NVARCHAR(10),
 	[ISBN] BIGINT NOT NULL,
@@ -416,9 +415,9 @@ GO
 DROP TABLE IF EXISTS [Item].[LingusticDescriptions];
 GO
 CREATE TABLE [Item].[LingusticDescriptions](
-	[LingusticDescriptionID] INT PRIMARY KEY IDENTITY(1,1),
 	[ItemID] INT NOT NULL,
 	[LanguageID] TINYINT NOT NULL
+	CONSTRAINT PK_LinguisticDescription PRIMARY KEY ([ItemID], [LanguageID])
 )
 GO
 ----------------------------------------------
