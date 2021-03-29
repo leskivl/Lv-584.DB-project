@@ -224,7 +224,6 @@ DROP TABLE IF EXISTS [Sales].[Accounts];
 GO
 CREATE TABLE [Sales].[Accounts] (
   AccountID INT PRIMARY KEY IDENTITY(1,1),
-  CustomerID INT UNIQUE NOT NULL,
   UserLogin  NVARCHAR(20) UNIQUE NOT NULL,
   UserPassword NVARCHAR(10) NOT NULL,
   ModifiedDate DATETIME NOT NULL
