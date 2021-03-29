@@ -224,7 +224,6 @@ DROP TABLE IF EXISTS [Sales].[Accounts];
 GO
 CREATE TABLE [Sales].[Accounts] (
   AccountID INT PRIMARY KEY IDENTITY(1,1),
-  CustomerID INT UNIQUE NOT NULL,
   UserLogin  NVARCHAR(20) UNIQUE NOT NULL,
   UserPassword NVARCHAR(10) NOT NULL,
   ModifiedDate DATETIME NOT NULL
@@ -311,9 +310,8 @@ CREATE TABLE [Item].[Items](
 	[Title] NVARCHAR (500) NOT NULL,
 	[Description] NVARCHAR(MAX),
 	[CoverTypeID] TINYINT,
-	[GenreID] TINYINT,
-	[Year] DATE NOT NULL,
-	[AgeRestrictionID] NVARCHAR(10) ,
+	[Year] NVARCHAR(5),
+	[AgeRestrictionID] NVARCHAR(10),
 	[ISBN] BIGINT NOT NULL,
 	[Pages] INT,
 	[Issue] NVARCHAR(10),
@@ -417,9 +415,9 @@ GO
 DROP TABLE IF EXISTS [Item].[LingusticDescriptions];
 GO
 CREATE TABLE [Item].[LingusticDescriptions](
-	[LingusticDescriptionID] INT PRIMARY KEY IDENTITY(1,1),
 	[ItemID] INT NOT NULL,
 	[LanguageID] TINYINT NOT NULL
+	CONSTRAINT PK_LinguisticDescription PRIMARY KEY ([ItemID], [LanguageID])
 )
 GO
 ----------------------------------------------
