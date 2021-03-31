@@ -120,7 +120,8 @@ DROP TABLE IF EXISTS [Address].[Cities];
 GO
 CREATE TABLE [Address].[Cities] (
   [CityID] SMALLINT PRIMARY KEY IDENTITY(1, 1),
-  [Name] NVARCHAR(50) NOT NULL
+  [Name] NVARCHAR(50) NOT NULL,
+  [CountryID] TINYINT
 )
 GO
 DROP TABLE IF EXISTS [Unit].[BusinessUnitTypes];
@@ -306,15 +307,14 @@ GO
 CREATE TABLE [Item].[Items](
 	[ItemID] INT PRIMARY KEY IDENTITY(1,1),
 	[SubcategoryID] TINYINT NOT NULL,
-	[PriceHistoryID] INT NOT NULL,
 	[Title] NVARCHAR (500) NOT NULL,
 	[Description] NVARCHAR(MAX),
 	[CoverTypeID] TINYINT,
 	[GenreID] TINYINT,
-	[Year] NVARCHAR(5),
-	[AgeRestrictionID] NVARCHAR(10),
-	[ISBN] BIGINT NOT NULL,
-	[Pages] INT,
+	[Year] DATE NOT NULL,
+	[AgeRestriction] NVARCHAR(10) ,
+	[ISBN] NVARCHAR (50) NOT NULL,
+	[Pages] SMALLINT,
 	[Issue] NVARCHAR(10),
 	[CreateDate] DATE NOT NULL,
 	[ModifiedDate] DATE NOT NULL
@@ -362,9 +362,8 @@ DROP TABLE IF EXISTS [Item].[Authors];
 GO
 CREATE TABLE [Item].[Authors](
 	[AuthorID] INT PRIMARY KEY IDENTITY(1,1),
-	[FirstName] NVARCHAR(50) NOT NULL,
-	[MiddleName] NVARCHAR(50),
-	[LastName] NVARCHAR(50) NOT NULL
+	[LastName] NVARCHAR(50) NOT NULL,
+	[Name] NVARCHAR(50) NOT NULL
 )
 GO
 DROP TABLE IF EXISTS [Item].[Genres];
@@ -404,15 +403,7 @@ CREATE TABLE [Item].[Authorships](
 	CONSTRAINT PK_Authorships PRIMARY KEY ([ItemID],[AuthorID])
 )
 GO
-DROP TABLE IF EXISTS [Item].[ScenicalDescriptions];
-GO
-CREATE TABLE [Item].[ScenicalDescriptions](
-	[ItemID] INT NOT NULL,
-	[GenreID] TINYINT NOT NULL,
-	CONSTRAINT PK_ScenicalDescriptions PRIMARY KEY ([ItemID],[GenreID])
 
-)
-GO
 DROP TABLE IF EXISTS [Item].[LingusticDescriptions];
 GO
 CREATE TABLE [Item].[LingusticDescriptions](
@@ -534,12 +525,6 @@ REFERENCES [Item].[Items] ([ItemID])
 GO
 ALTER TABLE [Item].[LingusticDescriptions]  WITH CHECK ADD  CONSTRAINT [FK_LingusticDescriptions_Languages] FOREIGN KEY([LanguageID])
 REFERENCES [Item].[Languages] ([LanguageID])
-GO
-ALTER TABLE [Item].[ScenicalDescriptions]  WITH CHECK ADD  CONSTRAINT [FK_ScenicalDescriptions_Genres] FOREIGN KEY([GenreID])
-REFERENCES [Item].[Genres] ([GenreID])
-GO
-ALTER TABLE [Item].[ScenicalDescriptions]  WITH CHECK ADD  CONSTRAINT [FK_ScenicalDescriptions_Items] FOREIGN KEY([ItemID])
-REFERENCES [Item].[Items] ([ItemID])
 GO
 ALTER TABLE [Item].[Authorships]  WITH CHECK ADD  CONSTRAINT [FK_Authorships_Authors] FOREIGN KEY([AuthorID])
 REFERENCES [Item].[Authors] ([AuthorID])
