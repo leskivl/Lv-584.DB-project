@@ -81,7 +81,6 @@ CREATE TABLE [Address].[DeliveryDepartments] (
   [DeliveryDepartmentID] INT PRIMARY KEY IDENTITY(1, 1),
   [DeliveryTypeID] TINYINT NOT NULL,
   [DeliveryCompanyID] TINYINT,
-  [CountryID] TINYINT,
   [CityID] SMALLINT,
   [DepartmentNumber] INT,
   [DepartmentAddress] NVARCHAR(500)
@@ -120,8 +119,7 @@ DROP TABLE IF EXISTS [Address].[Cities];
 GO
 CREATE TABLE [Address].[Cities] (
   [CityID] SMALLINT PRIMARY KEY IDENTITY(1, 1),
-  [Name] NVARCHAR(50) NOT NULL,
-  [CountryID] TINYINT
+  [Name] NVARCHAR(50) NOT NULL
 )
 GO
 DROP TABLE IF EXISTS [Unit].[BusinessUnitTypes];
@@ -210,7 +208,6 @@ CREATE TABLE [Purchase].[Vendors] (
   [VendorCode] BIGINT NOT NULL,
   [Name] NVARCHAR(50) NOT NULL,
   [Iban] NVARCHAR(29) NOT NULL,
-  [CountryID] TINYINT NOT NULL,
   [ZipCode] INT NOT NULL,
   [CityID] SMALLINT NOT NULL,
   [Street] NVARCHAR(255) NOT NULL,
@@ -239,7 +236,6 @@ CREATE TABLE [Sales].[Customers] (
   [LastName] NVARCHAR(50) NOT NULL,
   [AccountID] INT,
   [ZipCode] INT NOT NULL,
-  [CountryID] TINYINT,
   [CityID] SMALLINT NOT NULL,
   [Street] NVARCHAR(255) NOT NULL,
   [BuildingNumber] NVARCHAR(5) NOT NULL,
@@ -354,7 +350,6 @@ GO
 CREATE TABLE [Item].[Publishers](
 	[PublisherID] SMALLINT PRIMARY KEY IDENTITY(1,1),
 	[Name] NVARCHAR(500) NOT NULL,
-	[CountryID] TINYINT,
 	[CityID] SMALLINT
 )
 GO
@@ -460,8 +455,8 @@ GO
 ALTER TABLE [Sales].[Customers]  WITH CHECK ADD  CONSTRAINT [FK_Customers_Discounts] FOREIGN KEY([DiscountID])
 REFERENCES [Sales].[Discounts] ([DiscountID])
 GO
-ALTER TABLE [Sales].[Customers]  WITH CHECK ADD  CONSTRAINT [FK_Customers_Countries] FOREIGN KEY([CountryID])
-REFERENCES [Address].[Countries] ([CountryID])
+--ALTER TABLE [Sales].[Customers]  WITH CHECK ADD  CONSTRAINT [FK_Customers_Countries] FOREIGN KEY([CountryID])
+--REFERENCES [Address].[Countries] ([CountryID])
 GO
 ALTER TABLE [Sales].[Orders]  WITH CHECK ADD  CONSTRAINT [FK_Orders_BusinessUnits] FOREIGN KEY([BusinessUnitID])
 REFERENCES [Unit].[BusinessUnits] ([BusinessUnitID])
@@ -541,8 +536,8 @@ GO
 ALTER TABLE [Item].[Publishers]  WITH CHECK ADD  CONSTRAINT [FK_Publishers_Cities] FOREIGN KEY([CityID])
 REFERENCES [Address].[Cities] ([CityID])
 GO
-ALTER TABLE [Item].[Publishers]  WITH CHECK ADD  CONSTRAINT [FK_Publishers_Countries] FOREIGN KEY([CountryID])
-REFERENCES [Address].[Countries] ([CountryID])
+--ALTER TABLE [Item].[Publishers]  WITH CHECK ADD  CONSTRAINT [FK_Publishers_Countries] FOREIGN KEY([CountryID])
+--REFERENCES [Address].[Countries] ([CountryID])
 GO
 ALTER TABLE [Purchase].[ShipmentDetails]  WITH CHECK ADD  CONSTRAINT [FK_ShipmentDetails_Items] FOREIGN KEY([ItemID])
 REFERENCES [Item].[Items] ([ItemID])
@@ -550,8 +545,8 @@ GO
 ALTER TABLE [Purchase].[ShipmentDetails]  WITH CHECK ADD  CONSTRAINT [FK_ShipmentDetails_Shipments] FOREIGN KEY([ShipmentID])
 REFERENCES [Purchase].[Shipments] ([ShipmentID])
 GO
-ALTER TABLE [Address].[DeliveryDepartments]  WITH CHECK ADD  CONSTRAINT [FK_DeliveryDepartments_Countries] FOREIGN KEY([CountryID])
-REFERENCES [Address].[Countries] ([CountryID])
+--ALTER TABLE [Address].[DeliveryDepartments]  WITH CHECK ADD  CONSTRAINT [FK_DeliveryDepartments_Countries] FOREIGN KEY([CountryID])
+--REFERENCES [Address].[Countries] ([CountryID])
 GO
 ALTER TABLE [Address].[DeliveryDepartments]  WITH CHECK ADD  CONSTRAINT [FK_DeliveryDepartments_DeliveryCompanies] FOREIGN KEY([DeliveryCompanyID])
 REFERENCES [Address].[DeliveryCompanies] ([DeliveryCompanyID])
@@ -565,8 +560,8 @@ GO
 ALTER TABLE [Sales].[OrderDetails]  WITH CHECK ADD  CONSTRAINT [FK_OrderDetails_Items] FOREIGN KEY([ItemID])
 REFERENCES [Item].[Items] ([ItemID])
 GO
-ALTER TABLE [Purchase].[Vendors]  WITH CHECK ADD  CONSTRAINT [FK_Vendors_Countries] FOREIGN KEY([CountryID])
-REFERENCES [Address].[Countries] ([CountryID])
+--ALTER TABLE [Purchase].[Vendors]  WITH CHECK ADD  CONSTRAINT [FK_Vendors_Countries] FOREIGN KEY([CountryID])
+--REFERENCES [Address].[Countries] ([CountryID])
 GO
 ALTER TABLE [Purchase].[Shipments]  WITH CHECK ADD  CONSTRAINT [FK_Shipments_BusinessUnits] FOREIGN KEY([BusinessUnitIDFrom])
 REFERENCES [Unit].[BusinessUnits] ([BusinessUnitID])
