@@ -307,13 +307,12 @@ CREATE TABLE [Item].[Items](
 	[Description] NVARCHAR(MAX),
 	[CoverTypeID] TINYINT,
 	[GenreID] TINYINT,
-	[Year] DATE NOT NULL,
+	[Year] NVARCHAR(7) NOT NULL,
 	[AgeRestriction] NVARCHAR(10) ,
 	[ISBN] NVARCHAR (50) NOT NULL,
 	[Pages] SMALLINT,
 	[Issue] NVARCHAR(10),
-	[CreateDate] DATE NOT NULL,
-	[ModifiedDate] DATE NOT NULL
+	[CreateDate] DATE NOT NULL
 )
 GO
 DROP TABLE IF EXISTS [Item].[PriceHistories];
