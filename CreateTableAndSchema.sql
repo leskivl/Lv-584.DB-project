@@ -126,7 +126,7 @@ DROP TABLE IF EXISTS [Unit].[BusinessUnitTypes];
 GO
 CREATE TABLE [Unit].[BusinessUnitTypes] (
   [BusinessUnitTypeID] TINYINT PRIMARY KEY IDENTITY(1, 1),
-  [Name] NVARCHAR NOT NULL -- shop or warehouse
+  [Name] NVARCHAR(10) NOT NULL -- shop or warehouse
 )
 GO
 DROP TABLE IF EXISTS [Purchase].[Stocks];
@@ -142,7 +142,7 @@ DROP TABLE IF EXISTS [Employee].[Departments];
 GO
 CREATE TABLE [Employee].[Departments] (
   [DepartmentID] TINYINT PRIMARY KEY IDENTITY(1, 1),
-  [Name] INT UNIQUE NOT NULL --security, HR, etc
+  [Name] NVARCHAR(MAX) NOT NULL --security, HR, etc
 )
 GO
 DROP TABLE IF EXISTS [Employee].[Employees];
@@ -196,9 +196,18 @@ CREATE TABLE [Employee].[EmployeeRoleHistories] (
   [RoleID] TINYINT NOT NULL,
   [StartDate] DATE NOT NULL,
   [EndDate] DATE,
-  [Salary] DECIMAL(8,2) NOT NULL,
   [IsActive] BIT NOT NULL,
-  [SalaryModifiedDate] DATE
+)
+GO
+DROP TABLE IF EXISTS [Employee].[EmployeeSalaryHistories];
+GO
+CREATE TABLE [Employee].[EmployeeSalaryHistories] (
+  [EmployeeRoleHistoryID] INT PRIMARY KEY IDENTITY(1, 1),
+  [EmployeeID] INT NOT NULL,
+  [Salary] DECIMAL(8,2) NOT NULL,
+  [StartDate] DATE NOT NULL,
+  [EndDate] DATE,
+  [IsActive] BIT NOT NULL,
 )
 GO
 DROP TABLE IF EXISTS [Purchase].[Vendors];
