@@ -48,7 +48,7 @@ CREATE TABLE [Sales].[Orders] (
   [CustomerID] INT,
   [Date] DATETIME NOT NULL,
   [PaymentTypeID] TINYINT NOT NULL,
-  [RRN] INT, --bank transaction
+  [RRN] BIGINT, --bank transaction
   [Amount] DECIMAL NOT NULL,--without discount
   [DiscountID] TINYINT,
   [DiscountAmount] DECIMAL,--with discount
