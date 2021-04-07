@@ -40,23 +40,21 @@ CREATE TABLE [Sales].[PaymentTypes] (
   [Name] NVARCHAR(20) NOT NULL --cash or card
 )
 GO
+
 DROP TABLE IF EXISTS [Sales].[Orders];
 GO
 CREATE TABLE [Sales].[Orders] (
-  [OrderID] INT PRIMARY KEY IDENTITY(1, 1),
+  [OrderID] BIGINT PRIMARY KEY IDENTITY(1, 1),
   [EmployeeID] INT NOT NULL,
   [CustomerID] INT,
   [Date] DATETIME NOT NULL,
   [PaymentTypeID] TINYINT NOT NULL,
   [RRN] BIGINT, --bank transaction
-  [Amount] DECIMAL NOT NULL,--without discount
-  [DiscountID] TINYINT,
-  [DiscountAmount] DECIMAL,--with discount
   [DeliveryDepartmentID] INT, -- post
-  [BusinessUnitID] INT,		-- self-pickup
-  [Comment] NVARCHAR(100)
+  [BusinessUnitID] INT	-- self-pickup
 );
 GO
+
 DROP TABLE IF EXISTS [Sales].[OrderDetails];
 GO
 CREATE TABLE [Sales].[OrderDetails] (
