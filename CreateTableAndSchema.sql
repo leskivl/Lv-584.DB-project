@@ -102,9 +102,7 @@ CREATE TABLE [Unit].[BusinessUnits] ( --only in Ukraine
   [Street] NVARCHAR(255) NOT NULL,
   [BuildingNumber] NVARCHAR(5) NOT NULL,
   [AppartmentNumber] NVARCHAR(7),
-  [Phone] NVARCHAR NOT NULL,
-  [IsActive] BIT NOT NULL
-)
+  [Phone] NVARCHAR NOT NULL)
 GO
 DROP TABLE IF EXISTS [Address].[Countries];
 GO
